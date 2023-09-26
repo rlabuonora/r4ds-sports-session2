@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>R for Data Science With Sports Applications</title>
+    <meta charset="utf-8" />
+    <meta name="date" content="2023-09-26" />
+    <script src="index_files/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# R for Data Science With Sports Applications
+### 2023-09-26
+
+---
+
+
+
+
+
+
+
+## Recap
+
+- From Lab 1: it is important to keep track of where files are located in your computer.
+
+- Your hard drive is organized in _folders_ or _directories_.
+
+- In Mac os, `~/Desktop` is your desktop. 
+
+- If you have a directory called lab 1 in your desktop, `~/Desktop/lab1` is the location of that folder.
+
+- Run `setwd("~/Desktop/lab1")` to make that the working directory.
+
+- `list.files()` prints the contents of the working directory in your console.
+
+
+---
+## Recap 2
+
+- R code is organized in functions.
+
+- Functions take arguments and return values.
+
+- Data is stored in objects.
+
+- Assignment (`&lt;-`) makes variables point to objects.
+
+---
+## Recap 3
+
+
+```r
+x &lt;- c(1, 2, 3)
+mean(x)
+```
+
+```
+## [1] 2
+```
+
+
+```r
+str(mtcars)
+```
+
+```
+## 'data.frame':	32 obs. of  11 variables:
+##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+##  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+##  $ disp: num  160 160 108 258 360 ...
+##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+##  $ qsec: num  16.5 17 18.6 19.4 17 ...
+##  $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...
+```
+
+---
+## Data frame
+
+- The most important kind of object in R.
+
+
+```r
+# NBA championship 2017/2018 82 regular season games
+df &lt;- readRDS('./nba.rds')
+```
+
+---
+## Inspect df
+
+```r
+df
+```
+
+```
+##                      Team Playoff GP  MIN  PTS  W  L  P2M  P2A      P2p  P3M
+## 1           Atlanta Hawks       N 82 3941 8475 24 58 2213 4471 49.49676  917
+## 2          Boston Celtics       Y 82 3961 8529 55 27 2202 4483 49.11889  939
+## 3           Brooklyn Nets       N 82 3971 8741 28 54 2095 4190 50.00000 1041
+## 4       Charlotte Hornets       N 82 3956 8874 36 46 2373 4873 48.69690  824
+## 5           Chicago Bulls       N 82 3971 8440 27 55 2264 4736 47.80405  906
+## 6     Cleveland Cavaliers       Y 82 3946 9091 50 32 2330 4314 54.01020  981
+## 7        Dallas Mavericks       N 82 3961 8390 24 58 2161 4354 49.63252  967
+## 8          Denver Nuggets       N 82 3976 9020 46 36 2398 4566 52.51862  940
+## 9         Detroit Pistons       N 82 3961 8509 39 43 2322 4756 48.82254  886
+## 10  Golden State Warriors       Y 82 3946 9304 58 24 2583 4611 56.01822  926
+## 11        Houston Rockets       Y 82 3951 9213 65 17 1918 3436 55.82072 1256
+## 12         Indiana Pacers       Y 82 3951 8656 48 34 2604 5073 51.33057  741
+## 13            LA Clippers       N 82 3941 8937 42 40 2525 4808 52.51664  777
+## 14     Los Angeles Lakers       N 82 3981 8862 35 47 2516 4864 51.72697  822
+## 15      Memphis Grizzlies       N 82 3941 8145 22 60 2255 4636 48.64107  758
+## 16             Miami Heat       Y 82 3986 8480 44 38 2281 4491 50.79047  903
+## 17        Milwaukee Bucks       Y 82 3966 8731 44 38 2539 4783 53.08384  718
+## 18 Minnesota Timberwolves       Y 82 3961 8980 47 35 2707 5218 51.87811  658
+## 19   New Orleans Pelicans       Y 82 3991 9161 48 34 2663 4929 54.02719  837
+## 20        New York Knicks       N 82 3966 8566 29 53 2661 5279 50.40727  673
+## 21  Oklahoma City Thunder       Y 82 3966 8844 48 34 2390 4730 50.52854  881
+## 22          Orlando Magic       N 82 3946 8479 25 57 2338 4637 50.42053  844
+## 23     Philadelphia 76ers       Y 82 3956 9004 52 30 2448 4653 52.61122  901
+## 24           Phoenix Suns       N 82 3941 8522 21 61 2390 4855 49.22760  763
+## 25 Portland Trail Blazers       Y 82 3951 8661 49 33 2377 4824 49.27446  845
+## 26       Sacramento Kings       N 82 3951 8104 27 55 2441 5096 47.90031  738
+## 27      San Antonio Spurs       Y 82 3946 8424 47 35 2506 5022 49.90044  696
+## 28        Toronto Raptors       Y 82 3966 9156 59 23 2415 4464 54.09946  968
+## 29              Utah Jazz       Y 82 3951 8540 48 34 2252 4372 51.50961  887
+## 30     Washington Wizards       Y 82 3971 8742 43 39 2461 4845 50.79463  814
+##     P3A      P3p  FTM  FTA      FTp OREB DREB  AST  TOV STL BLK   PF   PM team
+## 1  2544 36.04560 1298 1654 78.47642  743 2693 1946 1276 638 348 1606 -447  ATL
+## 2  2492 37.68058 1308 1697 77.07720  767 2878 1842 1149 604 373 1618  294  BOS
+## 3  2924 35.60192 1428 1850 77.18919  792 2852 1941 1245 512 390 1688 -307  BKN
+## 4  2233 36.90103 1656 2216 74.72924  827 2901 1770 1041 559 373 1409   21  CHA
+## 5  2549 35.54335 1194 1574 75.85769  790 2873 1923 1147 626 289 1571 -577  CHI
+## 6  2636 37.21548 1488 1909 77.94657  694 2761 1916 1126 582 312 1524   77  CLE
+## 7  2688 35.97470 1167 1530 76.27451  666 2717 1858 1007 578 310 1578 -249  DAL
+## 8  2536 37.06625 1404 1830 76.72131  902 2748 2059 1227 627 404 1533  121  DEN
+## 9  2373 37.33670 1207 1621 74.46021  830 2756 1868 1103 628 317 1508  -12  DET
+## 10 2369 39.08822 1360 1668 81.53477  691 2877 2402 1265 655 612 1607  490  GSW
+## 11 3470 36.19597 1609 2061 78.06890  739 2825 1767 1135 699 392 1597  695  HOU
+## 12 2010 36.86567 1225 1573 77.87667  788 2684 1819 1088 721 340 1544  113  IND
+## 13 2196 35.38251 1556 2095 74.27208  832 2767 1832 1204 628 373 1638    3  LAC
+## 14 2384 34.47987 1364 1910 71.41361  876 2927 1949 1295 633 388 1736 -127  LAL
+## 15 2152 35.22305 1361 1732 78.57968  779 2544 1767 1227 612 396 1900 -509  MEM
+## 16 2506 36.03352 1209 1601 75.51530  763 2801 1862 1178 620 437 1648   39  MIA
+## 17 2024 35.47431 1499 1915 78.27676  688 2579 1905 1135 722 443 1752  -25  MIL
+## 18 1845 35.66396 1592 1980 80.40404  848 2593 1861 1021 689 345 1495  183  MIN
+## 19 2312 36.20242 1324 1716 77.15618  712 2924 2195 1223 657 485 1570  107  NOP
+## 20 1914 35.16196 1225 1557 78.67694  859 2752 1912 1207 552 421 1682 -292  NYK
+## 21 2491 35.36732 1421 1985 71.58690 1024 2671 1750 1147 743 412 1653  280  OKC
+## 22 2405 35.09356 1271 1678 75.74493  722 2692 1921 1192 622 400 1579 -395  ORL
+## 23 2445 36.85072 1405 1868 75.21413  893 2996 2221 1353 682 420 1811  369  PHI
+## 24 2286 33.37708 1453 1962 74.05708  842 2776 1743 1289 569 370 1807 -768  PHX
+## 25 2308 36.61179 1372 1715 80.00000  835 2893 1599 1109 573 423 1599  213  POR
+## 26 1967 37.51906 1008 1371 73.52298  777 2578 1768 1125 643 340 1639 -573  SAC
+## 27 1977 35.20486 1324 1715 77.20117  849 2777 1868 1078 628 460 1408  237  SAS
+## 28 2705 35.78558 1422 1790 79.44134  800 2807 1995 1095 626 500 1783  638  TOR
+## 29 2425 36.57732 1375 1766 77.85957  740 2807 1839 1205 708 420 1608  353  UTA
+## 30 2173 37.45973 1378 1786 77.15566  823 2713 2065 1196 645 353 1746   48  WAS
+##    Conference  Division Rank
+## 1           E Southeast   15
+## 2           E  Atlantic    2
+## 3           E  Atlantic   12
+## 4           E Southeast   10
+## 5           E   Central   13
+## 6           E   Central    4
+## 7           W Southwest   13
+## 8           W Northwest    9
+## 9           E   Central    9
+## 10          W   Pacific    2
+## 11          W Southwest    1
+## 12          E   Central    5
+## 13          W   Pacific   10
+## 14          W   Pacific   11
+## 15          W Southwest   14
+## 16          E Southeast    6
+## 17          E   Central    7
+## 18          W Northwest    8
+## 19          W Southwest    6
+## 20          E  Atlantic   11
+## 21          W Northwest    4
+## 22          E Southeast   14
+## 23          E  Atlantic    3
+## 24          W   Pacific   15
+## 25          W Northwest    3
+## 26          W   Pacific   12
+## 27          W Southwest    7
+## 28          E  Atlantic    1
+## 29          W Northwest    5
+## 30          E Southeast    8
+```
+
+---
+
+```r
+library(dplyr)
+glimpse(df)
+```
+
+```
+## Rows: 30
+## Columns: 28
+## $ Team       &lt;chr&gt; "Atlanta Hawks", "Boston Celtics", "Brooklyn Nets", "Charlo…
+## $ Playoff    &lt;fct&gt; N, Y, N, N, N, Y, N, N, N, Y, Y, Y, N, N, N, Y, Y, Y, Y, N,…
+## $ GP         &lt;int&gt; 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82,…
+## $ MIN        &lt;int&gt; 3941, 3961, 3971, 3956, 3971, 3946, 3961, 3976, 3961, 3946,…
+## $ PTS        &lt;int&gt; 8475, 8529, 8741, 8874, 8440, 9091, 8390, 9020, 8509, 9304,…
+## $ W          &lt;int&gt; 24, 55, 28, 36, 27, 50, 24, 46, 39, 58, 65, 48, 42, 35, 22,…
+## $ L          &lt;int&gt; 58, 27, 54, 46, 55, 32, 58, 36, 43, 24, 17, 34, 40, 47, 60,…
+## $ P2M        &lt;int&gt; 2213, 2202, 2095, 2373, 2264, 2330, 2161, 2398, 2322, 2583,…
+## $ P2A        &lt;int&gt; 4471, 4483, 4190, 4873, 4736, 4314, 4354, 4566, 4756, 4611,…
+## $ P2p        &lt;dbl&gt; 49.49676, 49.11889, 50.00000, 48.69690, 47.80405, 54.01020,…
+## $ P3M        &lt;int&gt; 917, 939, 1041, 824, 906, 981, 967, 940, 886, 926, 1256, 74…
+## $ P3A        &lt;int&gt; 2544, 2492, 2924, 2233, 2549, 2636, 2688, 2536, 2373, 2369,…
+## $ P3p        &lt;dbl&gt; 36.04560, 37.68058, 35.60192, 36.90103, 35.54335, 37.21548,…
+## $ FTM        &lt;int&gt; 1298, 1308, 1428, 1656, 1194, 1488, 1167, 1404, 1207, 1360,…
+## $ FTA        &lt;int&gt; 1654, 1697, 1850, 2216, 1574, 1909, 1530, 1830, 1621, 1668,…
+## $ FTp        &lt;dbl&gt; 78.47642, 77.07720, 77.18919, 74.72924, 75.85769, 77.94657,…
+## $ OREB       &lt;int&gt; 743, 767, 792, 827, 790, 694, 666, 902, 830, 691, 739, 788,…
+## $ DREB       &lt;int&gt; 2693, 2878, 2852, 2901, 2873, 2761, 2717, 2748, 2756, 2877,…
+## $ AST        &lt;int&gt; 1946, 1842, 1941, 1770, 1923, 1916, 1858, 2059, 1868, 2402,…
+## $ TOV        &lt;int&gt; 1276, 1149, 1245, 1041, 1147, 1126, 1007, 1227, 1103, 1265,…
+## $ STL        &lt;int&gt; 638, 604, 512, 559, 626, 582, 578, 627, 628, 655, 699, 721,…
+## $ BLK        &lt;int&gt; 348, 373, 390, 373, 289, 312, 310, 404, 317, 612, 392, 340,…
+## $ PF         &lt;int&gt; 1606, 1618, 1688, 1409, 1571, 1524, 1578, 1533, 1508, 1607,…
+## $ PM         &lt;int&gt; -447, 294, -307, 21, -577, 77, -249, 121, -12, 490, 695, 11…
+## $ team       &lt;fct&gt; ATL, BOS, BKN, CHA, CHI, CLE, DAL, DEN, DET, GSW, HOU, IND,…
+## $ Conference &lt;fct&gt; E, E, E, E, E, E, W, W, E, W, W, E, W, W, W, E, E, W, W, E,…
+## $ Division   &lt;fct&gt; Southeast, Atlantic, Atlantic, Southeast, Central, Central,…
+## $ Rank       &lt;int&gt; 15, 2, 12, 10, 13, 4, 13, 9, 9, 2, 1, 5, 10, 11, 14, 6, 7, …
+```
+
+---
+## Visualize
+
+We want to understand the relationship between assists and turnovers.
+
+&lt;img src="index_files/figure-html/unnamed-chunk-6-1.png" width="100%" /&gt;
+
+---
+## Grammar of graphics
+
+- Data
+
+- Aesthetic mappings
+
+- Geoms
+
+
+---
+### Identify the components of the grammar of graphics
+
+
+
+```r
+library(trackeR)
+runZones &lt;- zones(runs[1:4], what = "speed", breaks = c(0, 2:6, 12.5))
+plot(runZones)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-7-1.png" width="100%" /&gt;
+
+---
+### Lab 2
+
+- Create a plot to understand the relationship between two pointers made and three pointers made.
+- Think about the data and the aesthetic mappings that you want.
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

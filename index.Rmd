@@ -1,0 +1,146 @@
+---
+title: "R for Data Science With Sports Applications"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#1381B0",
+  secondary_color = "#FF961C",
+  inverse_header_color = "#FFFFFF"
+)
+```
+
+
+## Recap
+
+- From Lab 1: it is important to keep track of where files are located in your computer.
+
+- Your hard drive is organized in _folders_ or _directories_.
+
+- In Mac os, `~/Desktop` is your desktop. 
+
+- If you have a directory called lab 1 in your desktop, `~/Desktop/lab1` is the location of that folder.
+
+- Run `setwd("~/Desktop/lab1")` to make that the working directory.
+
+- `list.files()` prints the contents of the working directory in your console.
+
+
+---
+## Recap 2
+
+- R code is organized in functions.
+
+- Functions take arguments and return values.
+
+- Data is stored in objects.
+
+- Assignment (`<-`) makes variables point to objects.
+
+---
+## Recap 3
+
+```{r}
+x <- c(1, 2, 3)
+mean(x)
+```
+
+```{r}
+str(mtcars)
+```
+
+---
+## Data frame
+
+- The most important kind of object in R.
+
+```{r}
+# NBA championship 2017/2018 82 regular season games
+df <- readRDS('./nba.rds')
+```
+
+---
+## Inspect df
+```{r}
+df
+```
+
+---
+```{r}
+library(dplyr)
+glimpse(df)
+```
+
+---
+## Visualize
+
+We want to understand the relationship between assists and turnovers.
+
+```{r, echo=FALSE}
+library(ggplot2)
+
+
+# TODO: create a plot of assists vs turnovers.
+ggplot(data=df, aes(x=AST, 
+                    y=TOV, 
+                    color=Playoff, 
+                    shape=Playoff)) + 
+  geom_point() + 
+  labs(title="Turnovers vs. Assistes",
+       subtitle="2017/18 Regular Season",
+       x="Assists",
+       y="Turnovers")
+  
+```
+
+---
+## Grammar of graphics
+
+- Data
+
+- Aesthetic mappings
+
+- Geoms
+
+
+---
+### Identify the components of the grammar of graphics
+
+
+```{r}
+library(trackeR)
+runZones <- zones(runs[1:4], what = "speed", breaks = c(0, 2:6, 12.5))
+plot(runZones)
+```
+
+---
+### Lab 2
+
+- Create a plot to understand the relationship between two pointers made and three pointers made.
+- Think about the data and the aesthetic mappings that you want.
+
+
