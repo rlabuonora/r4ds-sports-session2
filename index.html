@@ -251,7 +251,7 @@ Key functions. Take a `data.frame` as input and return a `data.frame`.
 ---
 ## Filter
 
-Filter columns.
+Filter rows from the `data.frame`.
 
 
 ```r
@@ -392,44 +392,6 @@ Like mutate, you need to pass one or more expression, that will be applied to ea
 ## Arrange
 
 - Sorts the `data.frame`
-
----
-## Visualize
-
-We want to understand the relationship between assists and turnovers.
-
-&lt;img src="index_files/figure-html/unnamed-chunk-11-1.png" width="100%" /&gt;
-
----
-## Grammar of graphics
-
-- Data
-
-- Aesthetic mappings
-
-- Geoms
-
-
----
-### Identify the components of the grammar of graphics
-
-
-
-```r
-library(trackeR)
-runZones &lt;- zones(runs[1:4], what = "speed", breaks = c(0, 2:6, 12.5))
-plot(runZones)
-```
-
-&lt;img src="index_files/figure-html/unnamed-chunk-12-1.png" width="100%" /&gt;
-
----
-### Lab 2
-
-- Create a plot to understand the relationship between two pointers made and three pointers made.
-- Think about the data and the aesthetic mappings that you want.
-
-
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
