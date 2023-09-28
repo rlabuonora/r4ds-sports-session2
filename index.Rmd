@@ -96,6 +96,83 @@ glimpse(df)
 ```
 
 ---
+## Dplyr verbs
+
+Key functions. Take a `data.frame` as input and return a `data.frame`. 
+
+
+- `filter`
+- `select`
+- `mutate`
+- `group_by`
+- `summarize`
+- `arrange`
+
+---
+## Filter
+
+Filter columns.
+
+```{r}
+playoff_teams <- filter(df, Playoff=='Y')
+glimpse(playoff_teams)
+```
+
+Return another data frame with the rows where the second argument is `TRUE`.
+
+---
+## Select
+
+Remove columns from the data frame
+
+```{r}
+df_2 <- select(df, Team, Playoff, W, L)
+glimpse(df_2)
+```
+
+---
+## Mutate
+
+.pull-left[
+
+Return a new data frame with a new column:
+```{r}
+df_rebs <- mutate(df, REB=OREB+DREB)
+glimpse(df_rebs)
+```
+]
+.pull-right[
+The first argument is a `data.frame`. The rest of the arguments is one or more `expressions`. You can use formulas and mathematical operators (`-`, `+`, `*`, `/`) in those expressions.
+
+]
+
+---
+## Group By
+
+- Returns a __grouped__ data frame.
+- Does nothing to the data, but subsequent functions behave differently (`summarize`).
+
+```{r}
+df_grouped <- group_by(df, Playoff)
+```
+
+
+---
+## Summarize
+
+Returns a data frame with a summary of the argument. It will have one row per group in the argument data frame.
+
+```{r}
+tbl <- summarize(df_grouped, avg_pts=mean(PTS))
+```
+
+Like mutate, you need to pass one or more expression, that will be applied to each group in the data. 
+---
+## Arrange
+
+- Sorts the `data.frame`
+
+---
 ## Visualize
 
 We want to understand the relationship between assists and turnovers.
