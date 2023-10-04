@@ -171,3 +171,71 @@ Like mutate, you need to pass one or more expression, that will be applied to ea
 ## Arrange
 
 - Sorts the `data.frame`
+- The arguments are the columns used for sorting. 
+- Use a minus sign before the argument to sort in descending order (ascending is the default)
+
+---
+## Arrange
+
+- Get the top 5 ranked teams
+```{r}
+sorted_df <- arrange(df, Rank)
+head(sorted_df, 5)
+```
+
+- Multiple arguments break ties
+- How would you print only the name of the teams?
+
+
+---
+## Count
+
+- Count how many observations for each value of the variable.
+- No arguments counts all the rows
+- If we pass arguments, counts grouping with the variable we passed.
+```{r}
+count(df)
+```
+
+- How many teams per division?
+```{r}
+count(df, Division)
+```
+---
+## Remember object types
+
+- Different functions take different type of objects.
+
+- `df` is a `data.frame`
+- A `data.frame` is a collection of vectors
+- Vectors can be of different types
+```{r}
+glimpse(df)
+```
+
+We can access vectors inside a data frame in multiple ways. `$` operator.
+
+```{r}
+mean(df$PTS)
+```
+
+- Dplyr verbs streamline access to vectors
+
+---
+## Mutate
+
+```{r}
+df_with_mean <- mutate(df, mean_pts=mean(PTS))
+```
+
+- Think about data types!
+
+
+<!-- ## Combine multiple dplyr verbs -->
+
+<!-- - Find the top team in each division -->
+<!-- ```{r} -->
+<!-- grouped <- group(df, Division) -->
+
+<!-- ``` -->
+
